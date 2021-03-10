@@ -1876,15 +1876,28 @@ C  (*j*)  for hard wired zero offset (lambda s =0) for terr05
          XW1 = 0.0
          XW2 = 0.0
          XW4 = 0.0
-         
-         LONO(1) = lon_c(i,j) 
-         LONO(2) = lon_c(i+1,j) 
-         LONO(3) = lon_c(i+1,j+1) 
-         LONO(4) = lon_c(i,j+1) 
-         LATO(1) = lat_c(i,j) 
-         LATO(2) = lat_c(i+1,j) 
-         LATO(3) = lat_c(i+1,j+1) 
-         LATO(4) = lat_c(i,j+1) 
+! If J and I are two points away from edge, have grid search box be +2
+! Should there be a check for if dx/dy <= 1km here??
+         IF (J .le. JM-2 .and. I .le. IM-2) THEN         
+           LONO(1) = lon_c(i,j) 
+           LONO(2) = lon_c(i+2,j) 
+           LONO(3) = lon_c(i+2,j+2) 
+           LONO(4) = lon_c(i,j+2) 
+           LATO(1) = lat_c(i,j) 
+           LATO(2) = lat_c(i+2,j) 
+           LATO(3) = lat_c(i+2,j+2) 
+           LATO(4) = lat_c(i,j+2)
+! Else, if J/I are within 1 point of edge, have grid search box be +1
+         ELSE
+           LONO(1) = lon_c(i,j) 
+           LONO(2) = lon_c(i+1,j) 
+           LONO(3) = lon_c(i+1,j+1) 
+           LONO(4) = lon_c(i,j+1) 
+           LATO(1) = lat_c(i,j) 
+           LATO(2) = lat_c(i+1,j) 
+           LATO(3) = lat_c(i+1,j+1) 
+           LATO(4) = lat_c(i,j+1)
+         ENDIF
          call get_index(IMN,JMN,4,LONO,LATO,DELXN,jst,jen,ilist,numx)
          do jj = jst, jen; do i2 = 1, numx
             ii = ilist(i2)
@@ -2847,14 +2860,29 @@ C     IN A GRID BOX
 !        print*, "J=", J 
         DO I=1,IM
           HC = 1116.2 - 0.878 * VAR(I,J) 
-          LONO(1) = lon_c(i,j) 
-          LONO(2) = lon_c(i+1,j) 
-          LONO(3) = lon_c(i+1,j+1) 
-          LONO(4) = lon_c(i,j+1) 
-          LATO(1) = lat_c(i,j) 
-          LATO(2) = lat_c(i+1,j) 
-          LATO(3) = lat_c(i+1,j+1) 
-          LATO(4) = lat_c(i,j+1) 
+! If J and I are two points away from edge, have grid search box be +2
+! Should there be a check for if dx/dy <= 1km here??
+          IF (J .le. JM-2 .and. I .le. IM-2) THEN         
+            LONO(1) = lon_c(i,j) 
+            LONO(2) = lon_c(i+2,j) 
+            LONO(3) = lon_c(i+2,j+2) 
+            LONO(4) = lon_c(i,j+2) 
+            LATO(1) = lat_c(i,j) 
+            LATO(2) = lat_c(i+2,j) 
+            LATO(3) = lat_c(i+2,j+2) 
+            LATO(4) = lat_c(i,j+2)
+! Else, if J/I are within 1 point of edge, have grid search box be +1
+          ELSE
+            LONO(1) = lon_c(i,j) 
+            LONO(2) = lon_c(i+1,j) 
+            LONO(3) = lon_c(i+1,j+1) 
+            LONO(4) = lon_c(i,j+1) 
+            LATO(1) = lat_c(i,j) 
+            LATO(2) = lat_c(i+1,j) 
+            LATO(3) = lat_c(i+1,j+1) 
+            LATO(4) = lat_c(i,j+1)
+          ENDIF
+ 
           call get_index(IMN,JMN,4,LONO,LATO,DELXN,jst,jen,ilist,numx)
           do j1 = jst, jen; do ii1 = 1, numx          
             i1 = ilist(ii1)
@@ -3415,14 +3443,28 @@ C     IN A GRID BOX
 !        print*, "J=", J 
         DO I=1,IM
           HC = 1116.2 - 0.878 * VAR(I,J) 
-          LONO(1) = lon_c(i,j) 
-          LONO(2) = lon_c(i+1,j) 
-          LONO(3) = lon_c(i+1,j+1) 
-          LONO(4) = lon_c(i,j+1) 
-          LATO(1) = lat_c(i,j) 
-          LATO(2) = lat_c(i+1,j) 
-          LATO(3) = lat_c(i+1,j+1) 
-          LATO(4) = lat_c(i,j+1) 
+! If J and I are two points away from edge, have grid search box be +2
+! Should there be a check for if dx/dy <= 1km here??
+          IF (J .le. JM-2 .and. I .le. IM-2) THEN         
+            LONO(1) = lon_c(i,j) 
+            LONO(2) = lon_c(i+2,j) 
+            LONO(3) = lon_c(i+2,j+2) 
+            LONO(4) = lon_c(i,j+2) 
+            LATO(1) = lat_c(i,j) 
+            LATO(2) = lat_c(i+2,j) 
+            LATO(3) = lat_c(i+2,j+2) 
+            LATO(4) = lat_c(i,j+2)
+! Else, if J/I are within 1 point of edge, have grid search box be +1
+          ELSE
+            LONO(1) = lon_c(i,j) 
+            LONO(2) = lon_c(i+1,j) 
+            LONO(3) = lon_c(i+1,j+1) 
+            LONO(4) = lon_c(i,j+1) 
+            LATO(1) = lat_c(i,j) 
+            LATO(2) = lat_c(i+1,j) 
+            LATO(3) = lat_c(i+1,j+1) 
+            LATO(4) = lat_c(i,j+1)
+          ENDIF
           call get_index(IMN,JMN,4,LONO,LATO,DELXN,jst,jen,ilist,numx)
           do j1 = jst, jen; do ii1 = 1, numx          
             i1 = ilist(ii1)
